@@ -67,7 +67,21 @@ public class Outline {
   public static void question4() {
     List<String> words = getList();
     System.out.println("4:");
-    // YOUR CODE
+
+    List<String> excitingWords = words.stream().
+            map(s -> s + "!").
+            collect(Collectors.toList());
+    System.out.println(excitingWords);
+
+    List<String> replaceWithEye = words.stream().
+            map(s -> s.replace("i", "eye")).
+            collect(Collectors.toList());
+    System.out.println(replaceWithEye);
+
+    List<String> upperWords = words.stream().
+            map(String::toUpperCase).
+            collect(Collectors.toList());
+    System.out.println(upperWords);
   }
 
 
@@ -79,7 +93,19 @@ public class Outline {
   public static void question5() {
     List<String> words = getList();
     System.out.println("5a:");
-    // YOUR CODE
+    words.stream()
+            .map(String::toUpperCase)
+            .filter(w -> w.length() < 4)
+            .filter(w -> w.contains("Q"))
+            .limit(1)
+            .forEach(System.out::println);
+
+    words.stream()
+            .map(String::toUpperCase)
+            .filter(w -> w.length() < 4)
+            .filter(w -> w.contains("Q"))
+            .limit(1)
+            .forEach(System.out::println);
   }
 
 
@@ -135,5 +161,7 @@ public class Outline {
     question1();
     question2();
     question3();
+    question4();
+    question5();
   }
 }
