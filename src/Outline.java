@@ -1,4 +1,5 @@
 import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -117,7 +118,13 @@ public class Outline {
   public static void question6() {
     List<String> words = getList();
     System.out.println("6:");
-    // YOUR CODE
+    Optional<String> result = words.stream()
+            .map(String::toUpperCase)
+            .peek(s -> System.out.println("pre-filter1: " + s))
+            .filter(s -> s.length() < 4)
+            .peek(s -> System.out.println("pre-filter2: " + s))
+            .filter(s -> s.contains("E"))
+            .findFirst();
   }
 
   // (*) Produce a single String that is the result of concatenating the
@@ -129,7 +136,9 @@ public class Outline {
   public static void question7() {
     List<String> words = getList();
     System.out.println("7:");
-    // YOUR CODE
+    words.stream()
+            .map(String::toUpperCase)
+            .reduce()
   }
 
 
@@ -163,5 +172,6 @@ public class Outline {
     question3();
     question4();
     question5();
+    question6();
   }
 }
