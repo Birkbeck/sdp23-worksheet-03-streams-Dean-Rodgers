@@ -16,7 +16,7 @@ public class Outline {
   public static void question1() {
     List<String> words = getList();
     System.out.println("1: ");
-    // YOUR CODE
+    words.stream().forEach(w -> System.out.println("  " + w));
   }
 
   // Repeat this problem but without two spaces in front of each word.
@@ -25,7 +25,7 @@ public class Outline {
   public static void question2() {
     List<String> words = getList();
     System.out.println("2: ");
-    // YOUR CODE
+    words.stream().forEach(System.out::println);
   }
 
   // For each of the following lambda expressions (see Question 5 in Worksheet 2),
@@ -39,7 +39,20 @@ public class Outline {
   public static void question3() {
     List<String> words = getList();
     System.out.println("3:");
-    // YOUR CODE
+    List<String> shortWords = words.stream()
+            .filter(s -> s.length() < 4)
+            .collect(Collectors.toList());
+    System.out.println(shortWords);
+
+    List<String> wordsWithB = words.stream()
+            .filter(s -> s.contains("b"))
+            .collect(Collectors.toList());
+    System.out.println(wordsWithB);
+
+    List<String> evenLengthWords = words.stream()
+            .filter(s -> (s.length() % 2) == 0)
+            .collect(Collectors.toList());
+    System.out.println(evenLengthWords);
   }
 
 
@@ -120,6 +133,7 @@ public class Outline {
 
   public static void main(String... args) { // varargs alternative to String[]
     question1();
-
+    question2();
+    question3();
   }
 }
