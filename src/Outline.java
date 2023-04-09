@@ -172,7 +172,23 @@ public class Outline {
     System.out.println(res);
   }
 
-  // CONTINUE WITH THE REST OF THE QUESTIONS
+  public static void question10(){
+    System.out.println("Q10:");
+    List<Dish> dishes = Dish.getMenu();
+    List<Dish> result = dishes.stream()
+            .filter(dish -> dish.type() == Dish.Type.MEAT)
+            .limit(2)
+            .collect(Collectors.toList());
+    System.out.println(result);
+  }
+
+  public static void question11() {
+    System.out.println("Q11:");
+    long numberOfDishes = Dish.getMenu().stream()
+            .mapToInt(dish -> 1)
+            .reduce(0, Integer::sum);
+    System.out.println(numberOfDishes);
+  }
 
   public static void main(String... args) { // varargs alternative to String[]
     question1();

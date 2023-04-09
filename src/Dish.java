@@ -1,4 +1,5 @@
 import java.util.*; // for conciseness
+import java.util.stream.Stream;
 
 public record Dish(String name, boolean vegetarian, int calories, Dish.Type type) {
 
