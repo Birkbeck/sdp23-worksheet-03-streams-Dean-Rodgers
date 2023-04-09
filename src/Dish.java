@@ -1,5 +1,4 @@
 import java.util.*; // for conciseness
-import java.util.stream.Stream;
 
 public record Dish(String name, boolean vegetarian, int calories, Dish.Type type) {
 
@@ -21,4 +20,8 @@ public record Dish(String name, boolean vegetarian, int calories, Dish.Type type
   }
 
   public enum Type { MEAT, FISH, OTHER }
+
+  public static void main(String[] args) {
+
+  }
 }

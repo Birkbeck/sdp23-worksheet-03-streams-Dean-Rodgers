@@ -1,3 +1,4 @@
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
@@ -190,6 +191,145 @@ public class Outline {
     System.out.println(numberOfDishes);
   }
 
+  public static Integer[] getIntegerArray() {
+    return new Integer[] { 1, 7, 3, 4, 8, 2 };
+  }
+
+  public static void question12() {
+    System.out.println("Q12:");
+    Integer[] numbers = getIntegerArray();
+    List<Integer> result = Arrays.stream(numbers)
+            .map(n -> n * n)
+            .collect(Collectors.toList());
+    System.out.println(result);
+  }
+
+   public static void question13() {
+     System.out.println("13:");
+     List<Integer> list1 = List.of(5, 2, 3);
+     List<Integer> list2 = List.of(3, 4);
+
+     List<List<Integer>> output = list1.stream()
+             .flatMap(num1 -> list2.stream()
+                     .map(num2 -> List.of(num1, num2)))
+             .collect(Collectors.toList());
+
+     System.out.println(output);
+   }
+
+  public static void question14() {
+    System.out.println("14:");
+    List<Integer> list1 = List.of(5, 2, 3);
+    List<Integer> list2 = List.of(3, 4);
+
+    List<List<Integer>> output = list1.stream()
+            .flatMap(num1 -> list2.stream()
+                    .filter(num2 -> (num1 + num2) % 3 == 0)
+                    .map(num2 -> List.of(num1, num2)))
+            .collect(Collectors.toList());
+    System.out.println(output);
+  }
+
+  // (*) Provide three ways to use streams to compute the sum of a list of
+  // numbers.
+
+  public static void question15() {
+    System.out.println("15:");
+
+    int sum1 = Stream.of(getIntegerArray())
+            .reduce((n1, n2) -> n1 + n2)
+            .get();
+    System.out.println(sum1);
+
+    int sum2 = Stream.of(getIntegerArray())
+            .reduce(0, Integer::sum);
+    System.out.println(sum2);
+
+    int sum3 = Stream.of(getIntegerArray())
+            .collect(Collectors.summingInt(n -> n));
+    System.out.println(sum3);
+
+    int sum4 = Stream.of(getIntegerArray())
+            .mapToInt(n -> n)
+            .sum();
+    System.out.println(sum4);
+
+    int sum5 = Stream.of(getIntegerArray())
+            .collect(Collectors.reducing(0, (n1, n2) -> n1 + n2));
+    System.out.println(sum5);
+  }
+
+  // (*) Write a static method that produces a List of a specified length of
+  // random numbers. For example,
+  // List<Double> nums = randomNumberList(someSize);
+  // Result is something like [0.7096867136897776, 0.09894202723079482, ...].
+
+  public static void question16() {
+    System.out.println("16:");
+    List<Double> randDoubles = randomNumberList(4);
+    System.out.println(randDoubles);
+  }
+
+  static List<Double> randomNumberList(int size) {
+    return Stream.generate(new Random()::nextDouble) // unspecified size - lazy evaluation (!)
+            .limit(size)
+            .collect(Collectors.toList());
+  }
+
+  // (*) Write a static method that produces a List of numbers that go in order
+  // by a step size. For example,
+  // List<Integer> nums = orderedNumberList(50, 5, someSize);
+  // Result is [50, 55, 60, ...].
+
+  public static void question17() {
+    System.out.println("17:");
+    List<Integer> stepInts = orderedNumberList(50, 5, 4);
+    System.out.println(stepInts);
+  }
+
+  static List<Integer> orderedNumberList(int start, int step, int size) {
+    return Stream.iterate(start, n -> n + step) // unspecified size - lazy evaluation (!)
+            .limit(size)
+            .collect(Collectors.toList());
+  }
+
+
+  // (*) Rewrite one of the solutions to Question 15 so that
+  // it can be executed in parallel; verify that you get the same answer as for
+  // the sequential code.
+
+  public static void question18() {
+    System.out.println("18:");
+    int sumP = Stream.of(getIntegerArray())
+            .parallel()
+            .reduce(0, Integer::sum);
+    System.out.println(sumP);
+  }
+
+
+  //  (**) Now, use streams to compute the product of some doubles. Show that
+  // the serial and parallel versions do not always result in the same answer.
+
+  public static void question19() {
+    System.out.println("19:");
+    Double[] doubleArray = { 2.0, 7.0, 3.0, 4.0, 8.0, 2.0, 3.0, 10.0, 11.2, 44.2, 54.1, 1120.1, 2345.6 };
+    double productDouble = Stream.of(doubleArray)
+            .reduce(1.0, (d1, d2) -> d1 * d2);
+    System.out.println(productDouble);
+
+    // try a few times
+    for (int i = 0; i < 10_000_000; i++) {
+      double productDoubleP = Stream.of(doubleArray)
+              .parallel()
+              .reduce(1.0, (d1, d2) -> d1 * d2);
+
+      if (productDouble != productDoubleP) {
+        System.out.println("Not equal (step " + i + "): " + productDouble + " v " + productDoubleP);
+        break;
+      }
+    }
+  }
+
   public static void main(String... args) { // varargs alternative to String[]
     question1();
     question2();
@@ -200,5 +340,15 @@ public class Outline {
     question7();
     question8();
     question9();
+    question10();
+    question11();
+    question12();
+    question13();
+    question14();
+    question15();
+    question16();
+    question17();
+    question18();
+    question19();
   }
 }
