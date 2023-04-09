@@ -136,9 +136,10 @@ public class Outline {
   public static void question7() {
     List<String> words = getList();
     System.out.println("7:");
-    words.stream()
+    String res = words.stream()
             .map(String::toUpperCase)
-            .reduce()
+            .reduce("", (a,b)->(a+b));
+    System.out.println(res);
   }
 
 
@@ -150,7 +151,12 @@ public class Outline {
   public static void question8() {
     List<String> words = getList();
     System.out.println("8:");
-    // YOUR CODE
+    String res = words.stream()
+            // note that only the second parameter needs to be transformed into upper case
+            // the first parameter (the accumulated result) is already upper-case
+            .reduce("", (sA, sB) -> sA + sB.toUpperCase());
+    System.out.println(res);
+
   }
 
   // (*) Produce a String that is all the words concatenated together, but
@@ -161,7 +167,9 @@ public class Outline {
   public static void question9() {
     List<String> words = getList();
     System.out.println("9:");
-    // YOUR CODE
+    String res = words.stream()
+            .collect(Collectors.joining(","));
+    System.out.println(res);
   }
 
   // CONTINUE WITH THE REST OF THE QUESTIONS
@@ -173,5 +181,8 @@ public class Outline {
     question4();
     question5();
     question6();
+    question7();
+    question8();
+    question9();
   }
 }
